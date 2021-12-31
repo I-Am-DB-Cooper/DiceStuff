@@ -67,34 +67,28 @@ int main()
 	for (int t : d4)
 		std::cout << std::setw(3) << t << ",";
 	std::cout << "\n===================================================\n";
-	for (int const& i1 : d1)
-	{
+	for (int const& i1 : d1) {
 		index[0] = i1;
-		for (int const& i2 : d2)
-		{
+		for (int const& i2 : d2) {
 			index[1] = i2;
-			for (int const& i3 : d3)
-			{
+			for (int const& i3 : d3) {
 				index[2] = i3;
-				for (int const& i4 : d4)
-				{
-                    rank = 0;
+				for (int const& i4 : d4) {
+					rank = 0;
 					auto temp = D_NUM - 1;
 					index[3] = i4;
-						
-                    for (auto j : sort_indices(index))
-                    { 
-                        rank += (++j) * (int)std::pow(10.0f, temp--);
-                    }
-                    ranks[rank]++;
-                    total++;
+					
+					for (auto j : sort_indices(index)) { 
+						rank += (++j) * (int)std::pow(10.0f, temp--);
+					}
+					ranks[rank]++;
+					total++;
 				}
 			}
 		}
 	}
 
-	for (auto const& j : ranks)
-	{
+	for (auto const& j : ranks) {
 		std::cout << "Ranking ";
 		std::cout << j.first << " occurs ";
 		std::cout << j.second << " out of " << total << " times.\n";
