@@ -8,8 +8,7 @@ std::map<int, int> output{};
 
 void genDieRolls(const std::vector<int>& dice, const std::vector<int>::size_type index = 0, int sum = 0)
 {
-    for(int i = 1; i <= dice[index]; ++i)
-    {
+    for(int i = 1; i <= dice[index]; ++i) {
         ++sum;
         if(index < dice.size() - 1)
             genDieRolls(dice, index + 1, sum);
@@ -20,8 +19,7 @@ void genDieRolls(const std::vector<int>& dice, const std::vector<int>::size_type
 
 void genDieRolls_RemoveSmallest(const std::vector<int>& dice, const std::vector<int>::size_type index = 0, int sum = 0, const int minimum = std::numeric_limits<int>::max())
 {
-    for(int i = 1; i <= dice[index]; ++i)
-    {
+    for(int i = 1; i <= dice[index]; ++i) {
         int currentMinimum = std::min(minimum, i);
         ++sum;
 
@@ -37,8 +35,7 @@ void genDieRolls_RemoveLargest(const std::vector<int>& dice, const std::vector<i
     genDieRolls_RemoveSmallest(dice, index, sum, std::numeric_limits<int>::max());
     auto front = output.begin();
     auto back = --output.end();
-    while(front->first < back->first)
-    {
+    while(front->first < back->first) {
         std::swap(front->second,back->second);
         ++front;
         --back;
@@ -47,13 +44,11 @@ void genDieRolls_RemoveLargest(const std::vector<int>& dice, const std::vector<i
 
 void genDieRolls_Reroll(const std::vector<int>& dice, const int& condition = 1, const std::vector<int>::size_type index = 0, int sum = 0, const bool isReroll = false)
 {
-    for(int i = 1; i <= dice[index]; ++i)
-    {
+    for(int i = 1; i <= dice[index]; ++i) {
         ++sum;
         if(index < dice.size() - 1)
             genDieRolls_Reroll(dice, condition, index + 1, sum);
-        else
-        {
+        else {
             if (i == condition and !isReroll)
                 genDieRolls_Reroll(dice, condition, index, sum - condition, true);
             else
@@ -68,16 +63,14 @@ void printVOutput()
     int total = 0;
     float average = 0.0f;
     
-    for(const auto& p : output)
-    {
+    for(const auto& p : output) {
         total += p.second;
         average += p.first * p.second;
     }
 
     average /= total;
        
-    for(const auto& p : output)
-    {
+    for(const auto& p : output) {
         std::cout << std::setw(2) << p.first << " ";
         cout_n("⋮", p.second*100/total);
         std::cout << '\n';
@@ -88,9 +81,11 @@ void printVOutput()
 int calculateBarHeight()
 {
     int highest = 0;
-    for(const auto& p : output)
-        if (p.second > highest)
+    for(const auto& p : output) {
+        if (p.second > highest) {
             highest = p.second;
+        }
+    }
     return highest;
 }
 
@@ -98,11 +93,9 @@ void printHOutput(const int& MaxHeight = 5, const int& BarWidth = 2)
 {
     auto cout_n = [](auto const& v, int n) { while (--n >= 0) std::cout << v; };
     float height = (float)calculateBarHeight()/(MaxHeight);
-    for (auto h{MaxHeight}; h > 0; --h)
-    {
+    for (auto h{MaxHeight}; h > 0; --h) {
         cout_n(' ',1);
-        for (const auto& p : output)
-        {
+        for (const auto& p : output) {
             char d[] = "█";
             char c[] = "▄";
             auto q = (float)p.second/height;
